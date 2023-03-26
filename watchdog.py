@@ -22,7 +22,7 @@ def get_moves():
     with open(CONFIG_FILE, "r") as config_file:
         payload = json.load(config_file)
     segments = payload["segments"]
-    fallback_iface = payload["fallback"]
+    fallback_wg_iface = payload["fallback"]
 
     def find_segment_of_gateway(mac):
         for iface, segment in segments.items():
@@ -61,8 +61,8 @@ def get_moves():
                         needed_moves[next_node] = other_seg
                     elif segments[other_seg]["priority"] == segment["priority"]:
                         # move node to fallback segment
-                        needed_moves[next_node] = fallback_iface
-                        logger.info(f"move {next_node} to fallback {fallback_iface}")
+                        needed_moves[next_node] = fallback_wg_iface
+                        logger.info(f"move {next_node} to fallback {fallback_wg_iface}")
                 else:
                     logger.warning(f"unknown batman gateway found: {mac}")
     return needed_moves

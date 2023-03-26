@@ -1,7 +1,7 @@
 {
-  "fallback": "bat20",
+  "fallback": "wg-20",
   "segments": {
-    "bat20": {
+    "wg-20": {
       "priority": 0,
       "allowed_gateways": [
         "02:a2:ff:ac:01:20",
@@ -12,7 +12,7 @@
         "02:a1:ff:ac:03:20"
       ]
     },
-    "bat11": {
+    "wg-11": {
       "priority": 1,
       "allowed_gateways": [
         "02:a2:ff:ac:01:11",
@@ -23,7 +23,7 @@
         "02:a1:ff:ac:03:11"
       ]
     },
-    "bat12": {
+    "wg-12": {
       "priority": 2,
       "allowed_gateways": [
         "02:a2:ff:ac:01:12",
@@ -34,7 +34,7 @@
         "02:a1:ff:ac:03:12"
       ]
     },
-    "bat13": {
+    "wg-13": {
       "priority": 3,
       "allowed_gateways": [
         "02:a2:ff:ac:01:13",
@@ -45,7 +45,7 @@
         "02:a1:ff:ac:03:13"
       ]
     },
-    "bat14": {
+    "wg-14": {
       "priority": 4,
       "allowed_gateways": [
         "02:a2:ff:ac:01:14",
@@ -56,7 +56,7 @@
         "02:a1:ff:ac:03:14"
       ]
     },
-    "bat15": {
+    "wg-15": {
       "priority": 5,
       "allowed_gateways": [
         "02:a2:ff:ac:01:15",
@@ -67,7 +67,7 @@
         "02:a1:ff:ac:03:15"
       ]
     },
-    "bat16": {
+    "wg-16": {
       "priority": 6,
       "allowed_gateways": [
         "02:a2:ff:ac:01:16",
@@ -78,7 +78,7 @@
         "02:a1:ff:ac:03:16"
       ]
     },
-    "bat17": {
+    "wg-17": {
       "priority": 7,
       "allowed_gateways": [
         "02:a2:ff:ac:01:17",
@@ -89,7 +89,7 @@
         "02:a1:ff:ac:03:17"
       ]
     },
-    "bat18": {
+    "wg-18": {
       "priority": 8,
       "allowed_gateways": [
         "02:a2:ff:ac:01:18",
@@ -100,7 +100,7 @@
         "02:a1:ff:ac:03:18"
       ]
     },
-    "bat19": {
+    "wg-19": {
       "priority": 9,
       "allowed_gateways": [
         "02:a2:ff:ac:01:19",
