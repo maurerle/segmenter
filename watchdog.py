@@ -13,20 +13,21 @@ logger = logging.getLogger(__name__)
 
 CLONE_URL = getenv("CLONE_URL", "https://github.com/ffac/peers-wg")
 REPOSITORY: str = getenv("REPOSITORY", "/etc/wireguard/peers-wg")
+LOGLEVEL: str = getenv("LOGLEVEL", "INFO")
 CONFIG_FILE: str = "watchdog_config.json"
+NODES_URL: str = getenv("HTTP_NODE_URL", "https://01.wg-node.freifunk-aachen.de/data/nodes.json")
 
 
 def get_moves():
     with open(CONFIG_FILE, "r") as config_file:
         payload = json.load(config_file)
     segments = payload["segments"]
-    fallback = payload["fallback"]
+    fallback_iface = payload["fallback"]["iface_name"]
 
     def find_segment_of_gateway(mac):
         for iface, segment in segments.items():
             if mac in segment["allowed_gateways"]:
                 return iface
-        logger.warning(f"unknown gateway found: {mac}")
         return None
 
     needed_moves: dict[str, str] = {}
@@ -35,7 +36,7 @@ def get_moves():
         prefix_lower = "/sys/class/net/{}/lower_".format(batadv_dev)
         for dev in glob(prefix_lower + "*"):
             ifname = dev[len(prefix_lower) :]
-            logger.info(f"current interface: {ifname}")
+            logger.debug(f"current interface: {ifname}")
 
             with open(dev + "/address", "r") as address:
                 mac = address.read().strip()
@@ -47,22 +48,30 @@ def get_moves():
                 mac = fields[0]
                 # throughput = fields[1]
                 next_node = fields[2]
-                if mac not in segment["allowed_gateways"]:
-                    other_seg = find_segment_of_gateway(mac)
-                    if other_seg:
-                        if segment["priority"] < segments[other_seg]["priority"]:
-                            # move current node to other_seg
-                            needed_moves[next_node] = other_seg
-                        elif segments[other_seg]["priority"] == segment["priority"]:
-                            # move node to first segment
-                            needed_moves[next_node] = fallback["iface_name"]
+
+                if mac in segment["allowed_gateways"]:
+                    # mac of a wanted batman gateway
+                    continue
+
+                other_seg = find_segment_of_gateway(mac)
+                if other_seg:
+                    if segment["priority"] < segments[other_seg]["priority"]:
+                        # move current node to other_seg
+                        logger.info(f"move {next_node} to {other_seg}")
+                        needed_moves[next_node] = other_seg
+                    elif segments[other_seg]["priority"] == segment["priority"]:
+                        # move node to first segment
+                        needed_moves[next_node] = fallback_iface
+                        logger.info(f"move {next_node} to fallback {fallback_iface}")
+                else:
+                    logger.warning(f"unknown batman gateway found: {mac}")
     return needed_moves
 
 
 def main() -> None:
     gitter = Gitter(REPOSITORY)
     while True:
-        tunnel_key_map = crawl_tunnel()
+        tunnel_key_map = crawl_tunnel(NODES_URL)
         gitter.pull()
         moves = get_moves()
         try:
@@ -70,7 +79,7 @@ def main() -> None:
                 tunnel_key_map[mac]: intf for mac, intf in moves.items()
             }
             committed = write_moves(public_key_to_interface)
-            if committed:
+            if len(committed) > 0:
                 gitter.bulk_commit(committed, "watchdog update")
                 gitter.push()
         except Exception as e:
@@ -80,5 +89,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level="INFO")
+    logging.basicConfig(level=LOGLEVEL)
     main()

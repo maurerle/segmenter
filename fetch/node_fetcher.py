@@ -1,7 +1,4 @@
 from requests import get
-from os import getenv
-
-NODES_URL: str = getenv("HTTP_NODE_URL", "https://01.wg-node.freifunk-aachen.de/data/nodes.json")
 
 
 def extract_node_geo_info(node) -> tuple[tuple[float, float], str]:
@@ -29,8 +26,8 @@ def extract_node_tunnel_info(node) -> tuple[tuple[float, float], str]:
         return None
 
 
-def crawl_geo():
-    nodes = get(NODES_URL).json()["nodes"]
+def crawl_geo(nodes_url):
+    nodes = get(nodes_url).json()["nodes"]
 
     key_location_map: dict[str, tuple[float, float]] = {}
 
@@ -47,8 +44,8 @@ def crawl_geo():
     return key_location_map
 
 
-def crawl_tunnel():
-    nodes = get(NODES_URL).json()["nodes"]
+def crawl_tunnel(nodes_url):
+    nodes = get(nodes_url).json()["nodes"]
 
     tunnel_key_map: dict[str, str] = {}
 

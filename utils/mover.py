@@ -1,7 +1,7 @@
 import os
 
 
-def write_moves(public_key_to_interface, repo):
+def write_moves(public_key_to_interface: dict[str, str], repo: str) -> list[str]:
     # create folders for interfaces
     for intf in public_key_to_interface.values():
         os.makedirs(os.path.join(repo, intf), exist_ok=True)
@@ -29,3 +29,4 @@ def write_moves(public_key_to_interface, repo):
 
     committed = to_delete
     committed.extend(to_create.keys())
+    return committed
