@@ -52,10 +52,10 @@ class Gitter:
         self._execute_autouser(f"git -C {self.repo} pull")
 
     def commit(self, filename: str, commit_message: str) -> None:
-        self._execute_autouser(f"git -C {self.repo} add {self.repo}/{filename}")
-        self._execute_autouser(f'git -C {self.repo} commit -m "{commit_message}')
+        self._execute_autouser(f"git -C {self.repo} add {filename}")
+        self._execute_autouser(f'git -C {self.repo} commit -m "{commit_message}"')
 
     def bulk_commit(self, filenames: list[str], commit_message: str) -> None:
         for filename in filenames:
-            self._execute_autouser(f"git -C {self.repo} add {self.repo}/{filename}")
-        self._execute_autouser(f'git -C {self.repo} commit -m "{commit_message}')
+            self._execute_autouser(f"git -C {self.repo} add {filename}")
+        self._execute_autouser(f'git -C {self.repo} commit -m "{commit_message}"')
