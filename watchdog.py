@@ -78,7 +78,7 @@ def main() -> None:
             public_key_to_interface = {
                 tunnel_key_map[mac]: intf for mac, intf in moves.items()
             }
-            committed = write_moves(public_key_to_interface)
+            committed = write_moves(public_key_to_interface, REPOSITORY)
             if len(committed) > 0:
                 gitter.bulk_commit(committed, "watchdog update")
                 gitter.push()
