@@ -13,7 +13,7 @@ def call(cmdline) -> [str]:
     return lines
 
 
-def call_batctl(batadv_dev, args) -> [str]:
+def call_batctl(batadv_dev, args) -> list[str]:
     def get_batctl_version():
         line = call(["batctl", "-v"])[0]
         version_match = [RE_BATCTL_VERSION.search(elem) for elem in line.split(".")]

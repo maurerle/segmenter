@@ -31,11 +31,13 @@ def get_moves():
         return None
 
     needed_moves: dict[str, str] = {}
-    for batadv_dev, segment in segments.items():
-        gateways: list[str] = call_batctl(batadv_dev, ["gwl", "-nH"])
+    for wg_dev, segment in segments.items():
+        iface_suffix = wg_dev.split("-")[1]
+        batadv_dev = "bat" + iface_suffix
+        gateways = call_batctl(batadv_dev, ["gwl", "-nH"])
         prefix_lower = "/sys/class/net/{}/lower_".format(batadv_dev)
         for dev in glob(prefix_lower + "*"):
-            ifname = dev[len(prefix_lower) :]
+            ifname = dev[len(prefix_lower):]
             logger.debug(f"current interface: {ifname}")
 
             with open(dev + "/address", "r") as address:
@@ -70,6 +72,7 @@ def get_moves():
 
 def main() -> None:
     gitter = Gitter(REPOSITORY)
+    logger.info("watchdog started")
     while True:
         tunnel_key_map = crawl_tunnel(NODES_URL)
         gitter.pull()
@@ -85,7 +88,8 @@ def main() -> None:
         except Exception as e:
             logger.error(f"could not write - restoring {e}")
             gitter.restore()
-        time.sleep(1)
+        time.sleep(60)
+    logger.info("watchdog stopped")
 
 
 if __name__ == "__main__":
