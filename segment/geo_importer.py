@@ -25,7 +25,7 @@ def import_segments() -> None:
         segments.append(Segment(segment_id, polygon))
 
 
-def get_interface_by_location(location: tuple[float, float]) -> str | None:
+def get_interface_by_location(location: tuple[float, float]) -> str or None:
     results = list(filter(lambda segment: segment.contains(*location), segments))
 
     if results:

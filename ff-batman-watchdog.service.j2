@@ -7,6 +7,9 @@ After=network.target
 User=auto
 WorkingDirectory=/home/auto
 ExecStart=/usr/bin/python3 watchdog.py
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ff-batman-watchdog
 Restart=always
 RestartSec=10
 

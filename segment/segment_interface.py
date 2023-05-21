@@ -2,7 +2,7 @@ import json
 
 MAPPING_FILE: str = "segment_to_interface.json"
 
-fallback: str | None = None
+fallback: str or None = None
 segments_to_interface: dict[str, str] = {}
 
 with open(MAPPING_FILE, "r") as segment_file:

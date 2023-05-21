@@ -18,8 +18,9 @@ The geosegmenter can be configured through environment variables or at the top o
 It can be executed on demand running 
 
 ```bash
+python3 -m pip install shapely
 export CLONE_URL="https://github.com/ffac/peers-wg"
-export HTTP_NODE_URL="http://url/to/nodes.json
+export HTTP_NODE_URL="http://url/to/nodes.json"
 export REPOSITORY="/etc/peers-wg"
 ./geosegmenter.py
 ```
@@ -35,8 +36,8 @@ Moving the gluon-node to the different segment is done by changing the allowed w
 
 ```bash
 export CLONE_URL="https://github.com/ffac/peers-wg"
-export HTTP_NODE_URL="http://url/to/nodes.json
-export REPOSITORY="/etc/peers-wg"
+export HTTP_NODE_URL="http://url/to/nodes.json"
+export REPOSITORY="/etc/wireguard/peers-wg"
 ./watchdog.py
 ```
 
