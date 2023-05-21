@@ -15,7 +15,14 @@ The geosegmenter uses a directory of shapefiles used to separate the mesh-networ
 By using the nodes.json from a meshviewer, the coordinates of gluon-nodes, where available, are used to determine the matching region/segment.
 
 The geosegmenter can be configured through environment variables or at the top of the file.
-It can be executed on demand running `python3 geosegmenter.py`
+It can be executed on demand running 
+
+```bash
+export CLONE_URL="https://github.com/ffac/peers-wg"
+export HTTP_NODE_URL="http://url/to/nodes.json
+export REPOSITORY="/etc/peers-wg"
+./geosegmenter.py
+```
 
 ### Segment-Watchdog
 
@@ -24,10 +31,21 @@ If two gluon-nodes from different segments can see each other, the gateway of th
 Then the device which sits in the segment with lower priority is then moved to the segment with higher priority, so that both devices are in the same segment and the mesh clouds are splitted correctly.
 Moving the gluon-node to the different segment is done by changing the allowed wireguard server port, by moving its public key to a different folder in the keys repository (e.g. https://github.com/ffac/peers-wg). The client then reconnects into the new segment.
 
+
+
+```bash
+export CLONE_URL="https://github.com/ffac/peers-wg"
+export HTTP_NODE_URL="http://url/to/nodes.json
+export REPOSITORY="/etc/peers-wg"
+./watchdog.py
+```
+
+
 ## related projects
 
 Historically, domains were named "segment" in ffac, but the usage is the same, except that the user does not manually decide the used segment.
 Other approaches to tackle scalability in BATMAN by reducing the number of devices in one mesh cloud are:
 
-* using multidomain support in gluon
-* https://github.com/freifunkh/ffh-packages/pull/6
+* manually [using config-mode-domain-select and multidomain support in gluon](https://gluon.readthedocs.io/en/latest/features/multidomain.html#via-config-mode)
+* [ffh-obedient-meshing](https://github.com/freifunkh/ffh-packages/pull/6)
+* [hood-selector](https://gluon.readthedocs.io/en/latest/package/gluon-hoodselector.html)

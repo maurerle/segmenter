@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import json
 import logging
 import time
@@ -15,7 +16,7 @@ CLONE_URL = getenv("CLONE_URL", "https://github.com/ffac/peers-wg")
 REPOSITORY: str = getenv("REPOSITORY", "/etc/wireguard/peers-wg")
 LOGLEVEL: str = getenv("LOGLEVEL", "INFO")
 CONFIG_FILE: str = "watchdog_config.json"
-NODES_URL: str = getenv("HTTP_NODE_URL", "https://01.wg-node.freifunk-aachen.de/data/nodes.json")
+NODES_URL: str = getenv("HTTP_NODE_URL", "https://map.aachen.freifunk.net/data/nodes.json")
 
 
 def get_moves():
