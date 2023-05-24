@@ -43,7 +43,7 @@ class Gitter:
         self._execute_autouser(f"git clone {clone_url} {self.repo}")
 
     def restore(self) -> None:
-        self._execute_autouser(f"git -C {self.repo} restore --staged")
+        self._execute_autouser(f"git -C {self.repo} reset --hard")
 
     def push(self) -> None:
         self._execute_autouser(f"git -C {self.repo} push")
