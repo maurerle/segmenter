@@ -16,6 +16,7 @@ def write_moves(public_key_to_interface: dict[str, str], repo: str) -> list[str]
             with open(cur_path, "r") as f:
                 key = f.read().strip()
                 if key in public_key_to_interface.keys():
+                    seg = public_key_to_interface[key]
                     to_create[os.path.join(repo, seg, filename)] = key
                     to_delete.append(cur_path)
                 # workaround for v2019 firmware - use nodename
