@@ -16,7 +16,9 @@ CLONE_URL = getenv("CLONE_URL", "https://github.com/ffac/peers-wg")
 REPOSITORY: str = getenv("REPOSITORY", "/etc/wireguard/peers-wg")
 LOGLEVEL: str = getenv("LOGLEVEL", "INFO")
 CONFIG_FILE: str = "watchdog_config.json"
-NODES_URL: str = getenv("HTTP_NODE_URL", "https://map.aachen.freifunk.net/data/nodes.json")
+NODES_URL: str = getenv(
+    "HTTP_NODE_URL", "https://map.aachen.freifunk.net/data/nodes.json"
+)
 
 
 def get_moves():
@@ -38,7 +40,7 @@ def get_moves():
         gateways = call_batctl(batadv_dev, ["gwl", "-nH"])
         prefix_lower = "/sys/class/net/{}/lower_".format(batadv_dev)
         for dev in glob(prefix_lower + "*"):
-            ifname = dev[len(prefix_lower):]
+            ifname = dev[len(prefix_lower) :]
             logger.debug(f"current interface: {ifname}")
 
             with open(dev + "/address", "r") as address:

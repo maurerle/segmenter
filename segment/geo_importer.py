@@ -1,7 +1,9 @@
-import os
 import json
-from segment.segment import Segment
+import os
+
 from shapely.geometry import shape
+
+from segment.segment import Segment
 from segment.segment_interface import fallback, segment_to_interface
 
 DIRECTORY: str = "shapefiles/"

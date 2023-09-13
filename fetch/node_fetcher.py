@@ -21,11 +21,11 @@ def extract_node_tunnel_info(node) -> tuple[tuple[float, float], str]:
         intf = nodeinfo["network"]["mesh"]["bat0"]["interfaces"]
         tunnel_macs: str = intf.get("tunnel", intf["other"])
         try:
-          public_key: str = nodeinfo["software"]["wireguard"]["public_key"]
+            public_key: str = nodeinfo["software"]["wireguard"]["public_key"]
         except KeyError:
-          public_key = nodeinfo["hostname"].lower()
+            public_key = nodeinfo["hostname"].lower()
         if nodeinfo["hostname"] == "ffac-seilpforte-841-F7BE":
-          print("hello", public_key, tunnel_macs)
+            print("hello", public_key, tunnel_macs)
 
         return [(tunnel_mac, public_key) for tunnel_mac in tunnel_macs]
     except KeyError:
@@ -58,7 +58,7 @@ def crawl_tunnel(nodes_url):
     for node in nodes:
         node_infos = extract_node_tunnel_info(node)
         for node_info in node_infos:
-          tunnel_mac, public_key = node_info
-          tunnel_key_map[tunnel_mac] = public_key
+            tunnel_mac, public_key = node_info
+            tunnel_key_map[tunnel_mac] = public_key
 
     return tunnel_key_map

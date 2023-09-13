@@ -1,4 +1,4 @@
-from shapely.geometry import Polygon, Point
+from shapely.geometry import Point, Polygon
 
 
 class Segment:
