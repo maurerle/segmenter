@@ -1,4 +1,24 @@
 import os
+import re
+import unicodedata
+
+# https://gist.github.com/berlotto/6295018
+_slugify_strip_re = re.compile(r"[^\w\s-]")
+_slugify_hyphenate_re = re.compile(r"[-\s]+")
+
+
+def slugify(value: str):
+    """
+    Normalizes string, converts to lowercase, removes non-alpha characters,
+    and converts spaces to hyphens.
+
+    From Django's "django/template/defaultfilters.py".
+    """
+    value = (
+        unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    )
+    value = _slugify_strip_re.sub("", value).strip().lower()
+    return _slugify_hyphenate_re.sub("-", value)
 
 
 def write_moves(public_key_to_interface: dict[str, str], repo: str) -> list[str]:

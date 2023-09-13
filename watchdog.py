@@ -8,7 +8,7 @@ from os import getenv
 from fetch.node_fetcher import crawl_tunnel
 from utils.batctl import call_batctl
 from utils.gitter import Gitter
-from utils.mover import write_moves
+from utils.mover import slugify, write_moves
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +52,7 @@ def get_moves():
                 fields = line.split()
                 mac = fields[0]
                 # throughput = fields[1]
-                next_node = fields[2]
+                next_node = slugify(fields[2])
 
                 if mac in segment["allowed_gateways"]:
                     # mac of a wanted batman gateway
